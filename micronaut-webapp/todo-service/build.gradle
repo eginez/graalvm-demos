@@ -38,6 +38,7 @@ dependencies {
     compile "io.micronaut:micronaut-runtime"
     compile "io.micronaut:micronaut-http-server-netty"
     compile "javax.annotation:javax.annotation-api"
+    compile 'io.micronaut:micronaut-management'
     compile project(":api")
     compileOnly "com.oracle.substratevm:svm"
     runtime "ch.qos.logback:logback-classic:1.2.3"
@@ -60,7 +61,9 @@ shadowJar {
 }
 
 run.classpath += configurations.developmentOnly
-run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote=true')
+
+
 tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
     options.compilerArgs.add('-parameters')
