@@ -19,6 +19,7 @@ services:
       dockerfile: Dockerfile$flavor
     ports:
       - 8443:8443
+      - 8085:8085
   frontend:
     build: 
       context: ./frontend
@@ -40,6 +41,7 @@ services:
       - ./loadTests:/opt/loadTest
     environment:
       - TODOSERVICE_HOST=todo-service
+      - JMX_PORT=8085
       - TODOSERVICE_PORT=8443
 EOF
 

@@ -6,8 +6,10 @@ RUN native-image --enable-all-security-services --no-server -cp 'build/libs/*'
 
 FROM frolvlad/alpine-glibc
 EXPOSE 8443
+EXPOSE 8085
 RUN mkdir /tmp/ssl-libs
 COPY --from=graalvm /opt/graalvm-ce-19.2.0/jre/lib/amd64/libsunec.so .
 COPY --from=graalvm /opt/graalvm-ce-19.2.0/jre/lib/security/cacerts /tmp/ssl-libs
 COPY --from=graalvm /home/app/todo-service .
-CMD ["./todo-service", "-Djavax.net.ssl.trustStore=/tmp/ssl-libs/cacerts"]
+ENV JAVA_OPTS "-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.rmi.port=8085 -Dcom.sun.management.jmxremote.port=8085 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
+CMD ["./todo-service", "-Djava.rmi.server.hostname=$JMX_HOST -Djavax.net.ssl.trustStore=/tmp/ssl-libs/cacerts ${JAVA_OPTS}"]

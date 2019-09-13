@@ -26,6 +26,6 @@ then
     echo
     echo
     echo "To run the docker container execute:"
-    echo "    $ docker run -p 8080:8080 $image_name"
+    echo "     $docker run -it -p 8443:8443 -p 8085:8085 -e \"JMX_HOST=192.168.1.104\" $image_name"
 fi
 
