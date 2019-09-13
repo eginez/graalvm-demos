@@ -33,8 +33,66 @@
             <stringProp name="Argument.value">${__P(apiPortService,8443)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="METRICS_PORT" elementType="Argument">
+            <stringProp name="Argument.name">METRICS_PORT</stringProp>
+            <stringProp name="Argument.value">${__P(metricsPort,8085)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
+      <hashTree/>
+      <kg.apc.jmeter.perfmon.PerfMonCollector guiclass="kg.apc.jmeter.vizualizers.PerfMonGui" testclass="kg.apc.jmeter.perfmon.PerfMonCollector" testname="HostMetrics" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>false</latency>
+            <timestamp>true</timestamp>
+            <success>false</success>
+            <label>true</label>
+            <code>true</code>
+            <message>false</message>
+            <threadName>false</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>false</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+          </value>
+        </objProp>
+        <stringProp name="filename">hostmetrics.csv</stringProp>
+        <longProp name="interval_grouping">1000</longProp>
+        <boolProp name="graph_aggregated">false</boolProp>
+        <stringProp name="include_sample_labels"></stringProp>
+        <stringProp name="exclude_sample_labels"></stringProp>
+        <stringProp name="start_offset"></stringProp>
+        <stringProp name="end_offset"></stringProp>
+        <boolProp name="include_checkbox_state">false</boolProp>
+        <boolProp name="exclude_checkbox_state">false</boolProp>
+        <collectionProp name="metricConnections">
+          <collectionProp name="793496030">
+            <stringProp name="1180709214">${HOST}</stringProp>
+            <stringProp name="1476835849">${METRICS_PORT}</stringProp>
+            <stringProp name="66952">CPU</stringProp>
+            <stringProp name="0"></stringProp>
+          </collectionProp>
+          <collectionProp name="-1507218291">
+            <stringProp reference="../../collectionProp/stringProp"/>
+            <stringProp reference="../../collectionProp/stringProp[2]"/>
+            <stringProp name="-1993889503">Memory</stringProp>
+            <stringProp reference="../../collectionProp/stringProp[4]"/>
+          </collectionProp>
+        </collectionProp>
+      </kg.apc.jmeter.perfmon.PerfMonCollector>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="ApiWriteLoad" enabled="true">
         <stringProp name="TestPlan.comments">This load creates a bunch of data</stringProp>

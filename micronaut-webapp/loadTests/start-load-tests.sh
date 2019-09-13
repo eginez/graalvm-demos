@@ -9,6 +9,7 @@ if [ $? -ne 0 ]; then
   exit -1
 fi
 
+mv hostmetrics.csv $OUT_DIR/hostmetrics.csv
 echo "Load test finished. Creating results"
 
 jmeter -g $OUT_DIR/loadTestResults.jtl -o $OUT_DIR/report

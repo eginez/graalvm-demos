@@ -14,6 +14,9 @@ RES_OUTPOUT=./res-$6-`date "+%Y-%m-%d-%H.%M"`
 echo "Deploying $1 to $2"
 docker save $1|pv|ssh -o StrictHostKeyChecking=no $2 "docker load"
 
+echo "Start host metrics agent on $2"
+ssh -o StrictHostKeyChecking=no  $2  "nohup ./ServerAgent-2.2.3/startAgent.sh --tcp-port 8085 --udp-port=0 &"
+
 echo "Deploying $3 to $4"
 docker save $3|pv|ssh -o StrictHostKeyChecking=no $4 "docker load"
 
