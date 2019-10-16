@@ -36,7 +36,16 @@ case "$1" in
         sed s"/\/opt\/graalvm-ce-19.2.0.1/\/usr\/lib64\/graalvm\/graalvm19-ee/g" | \
         sed  "/^RUN gu*/d"  > Docker-native-ee
         docker_file=Docker-native-ee
+        ## PROFILE_FILE contains the path to the profile file
+        if [[ $PROFILE_FILE != "" ]]
+        then
+            echo Adding pgo to the native image
+            tag=$tag-pgo
+            sed s"/--verbose/--verbose --pgo=$PROFILE_FILE/g" $docker_file > ${docker_file}-pgo
+            docker_file=${docker_file}-pgo
+        fi
     fi
+
     ;;
 esac
 

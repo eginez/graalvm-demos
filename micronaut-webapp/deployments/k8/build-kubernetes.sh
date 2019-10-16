@@ -154,63 +154,66 @@ sed s"/\$FRONTEND_IMAGE/$FRONTEND_IMAGE/g" deployments/k8/script-services/todofr
 rm deployments/k8/script-services/todofrontend_deployment.tpl
 
 cat > deployments/k8/script-services/todoloadtest_deployment.tpl << "EOF"
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: loadgeneration
-spec:
-  template:
-    metadata:
-      name: loadgeneration
-    spec:
-      containers:
-      - name: loadgeneration
-        image: $LOADGEN_IMAGE
-        imagePullPolicy: Always
-        env:
-          - name: TODOSERVICE_HOST
-            value: "todo-service"
-          - name: TODOSERVICE_PORT
-            value: "8443"
-          - name: LOADTESTS_RESULTS
-            value: "/tmp/results"
-
-      restartPolicy: Never
+#Uncomment this to deploy load generation as part of the cluster
+#This is usually not recommend as it will disrupt performance measuring metrics of the cluster
+#apiVersion: batch/v1
+#kind: Job
+#metadata:
+#  name: loadgeneration
+#spec:
+#  template:
+#    metadata:
+#      name: loadgeneration
+#    spec:
+#      containers:
+#      - name: loadgeneration
+#        image: $LOADGEN_IMAGE
+#        imagePullPolicy: Always
+#        env:
+#          - name: TODOSERVICE_HOST
+#            value: "todo-service"
+#          - name: TODOSERVICE_PORT
+#            value: "8443"
+#          - name: LOADTESTS_RESULTS
+#            value: "/tmp/results"
+#
+#      restartPolicy: Never
 EOF
 sed s"/\$LOADGEN_IMAGE/$LOADGEN_IMAGE/g" deployments/k8/script-services/todoloadtest_deployment.tpl > deployments/k8/script-services/todoloadtest_deployment.yml
 rm deployments/k8/script-services/todoloadtest_deployment.tpl
 
 cat > deployments/k8/script-services/storage_minikube.yml << "EOF"
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pers-vol
-  labels:
-    type: local
-spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/pers-vol"
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: pers-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: ""
-  volumeName: pers-vol
-  resources:
-    requests:
-      storage: 1Gi
+##Uncomment this for storage under minikube
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: pers-vol
+#  labels:
+#    type: local
+#spec:
+#  capacity:
+#    storage: 1Gi
+#  accessModes:
+#    - ReadWriteOnce
+#  hostPath:
+#    path: "/data/pers-vol"
+#---
+#kind: PersistentVolumeClaim
+#apiVersion: v1
+#metadata:
+#  name: pers-pvc
+#spec:
+#  accessModes:
+#    - ReadWriteOnce
+#  storageClassName: ""
+#  volumeName: pers-vol
+#  resources:
+#    requests:
+#      storage: 1Gi
 EOF
 
 
 echo "Kubernetes deployment files create in deployments/k8/script-services/"
 echo
 echo "To deploy"
-echo "    $ kubectl create -f deployments/k8/script-services"
+echo "    $ kubectl create -f deployments/k8/script-services/"

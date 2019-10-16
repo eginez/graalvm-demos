@@ -33,9 +33,15 @@ case "$1" in
         echo Building native ee image
         tag=:native-ee
         sed s"/oracle\/.*/$GRAALVM_DOCKER_EE as graalvm/g" $docker_file | \
-        sed s"/ARG GRAAL_VERSION=.*/ARG GRAAL_VERSION=graalvm-ee-19.2.0.1/g" | \
         sed  "/^RUN gu*/d"  > Docker-native-ee
         docker_file=Docker-native-ee
+        if [[ $PROFILE_FILE != "" ]]
+        then
+            echo Adding pgo to the native image
+            tag=$tag-pgo
+            sed s"/--verbose/--verbose --pgo=$PROFILE_FILE/g" $docker_file > ${docker_file}-pgo
+            docker_file=${docker_file}-pgo
+        fi
     fi
     ;;
 esac

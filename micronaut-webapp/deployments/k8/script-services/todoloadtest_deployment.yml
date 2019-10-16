@@ -1,22 +1,24 @@
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: loadgeneration
-spec:
-  template:
-    metadata:
-      name: loadgeneration
-    spec:
-      containers:
-      - name: loadgeneration
-        image: eginez/loadgeneration
-        imagePullPolicy: Always
-        env:
-          - name: TODOSERVICE_HOST
-            value: "todo-service"
-          - name: TODOSERVICE_PORT
-            value: "8443"
-          - name: LOADTESTS_RESULTS
-            value: "/tmp/results"
-
-      restartPolicy: Never
+#Uncomment this to deploy load generation as part of the cluster
+#This is usually not recommend as it will disrupt performance measuring metrics of the cluster
+#apiVersion: batch/v1
+#kind: Job
+#metadata:
+#  name: loadgeneration
+#spec:
+#  template:
+#    metadata:
+#      name: loadgeneration
+#    spec:
+#      containers:
+#      - name: loadgeneration
+#        image: eginez/loadgeneration
+#        imagePullPolicy: Always
+#        env:
+#          - name: TODOSERVICE_HOST
+#            value: "todo-service"
+#          - name: TODOSERVICE_PORT
+#            value: "8443"
+#          - name: LOADTESTS_RESULTS
+#            value: "/tmp/results"
+#
+#      restartPolicy: Never

@@ -16,7 +16,7 @@ spec:
       spec:
         containers:
         - name: todo-frontend
-          image: eginez/micronaut-webapp_frontend:native
+          image: eginez/micronaut-webapp_frontend:native-ee
           imagePullPolicy: Always
           env:
             - name: TODOSERVICE_URL

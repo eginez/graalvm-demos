@@ -16,7 +16,7 @@ spec:
       spec:
         containers:
         - name: todo-service
-          image: eginez/micronaut-webapp_todo-service:native
+          image: eginez/micronaut-webapp_todo-service:native-ee
           imagePullPolicy: Always
           ports:
           - containerPort: 8443

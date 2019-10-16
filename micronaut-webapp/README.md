@@ -56,8 +56,8 @@ If you want to build an specific service
 
 To execute the services
 ```
-./gradlew todo-service:run //for the todo-service
-./gradlew frontend:run //for the frontend
+./gradlew todo-service:run //for the todo-service you can also :runInstrumented to run an instance that will capture profiles
+./gradlew frontend:run //for the frontend you can also :runInstrumented to run a instance that will capture profiles
 ```
 The above will start the `frontend` service in [http://localhost:8081/todos](http://localhost:8081/todos) and the `todo-service` in [https://localhost:8443/api/todos](https://localhost:8443/api/todos)
 
@@ -84,6 +84,4 @@ To build and run all the service including load tests via kubernetes:
 - `./gradlew assemble`
 - `./deployments/k8/build-kubernetes.sh [|graalvm|hotspot]` Builds Docker images, if they don't exist, and creates a kubernetes config files in `k8` folder.
 - [Optional] for cluster deployment the created images must be pushed into Docker registry used by the cluster and `imagePullSecrets` may be required.
-- `kubectl create -f k8`
-
 
