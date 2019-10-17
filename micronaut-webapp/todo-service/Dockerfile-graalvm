@@ -1,4 +1,4 @@
-FROM oracle/graalvm-ce:19.2.0
+FROM oracle/graalvm-ce:19.2.0.1
 COPY build/libs/todo-service-*-all.jar todo-service.jar
 
 EXPOSE 8443
