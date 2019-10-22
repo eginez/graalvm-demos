@@ -1,16 +1,3 @@
-#!/bin/sh
-
-dockerfile_flavor=
-case "$1" in
-    graalvm* )
-    dockerfile_flavor=-graalvm
-    ;;
-    hotspot*)
-    dockerfile_flavor=-hotspot
-    ;;
-esac
-
-cat > docker-compose.tpl << "EOF"
 version: '3'
 services:
   redis-service:
@@ -21,7 +8,7 @@ services:
   todo-service:
     build:
       context: ../../todo-service
-      dockerfile: Dockerfile$flavor
+      dockerfile: Dockerfile-graalvm
     ports:
       - 8443:8443
     environment:
@@ -29,7 +16,7 @@ services:
   frontend:
     build: 
       context: ../../frontend
-      dockerfile: Dockerfile$flavor
+      dockerfile: Dockerfile-graalvm
     depends_on:
       - todo-service
     ports:
@@ -48,13 +35,3 @@ services:
     environment:
       - TODOSERVICE_HOST=todo-service
       - TODOSERVICE_PORT=8443
-EOF
-
-sed s"/\$flavor/$dockerfile_flavor/g" docker-compose.tpl | tee docker-compose.yml
-rm docker-compose.tpl
-
-echo
-echo
-echo "To build and run execute"
-echo "    $ docker-compose up --build"
-

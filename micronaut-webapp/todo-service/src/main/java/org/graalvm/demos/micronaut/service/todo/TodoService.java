@@ -9,6 +9,6 @@ public interface TodoService {
     Todo create(Todo todo) throws ServiceException;
     Todo update(String todoId, Todo newTodo) throws ServiceException;
     void remove(String todoId) throws ServiceException;
-    Collection<Todo> listTodos(String userId) throws ServiceException;
+    Collection<Todo> listTodos(String userId, int limit) throws ServiceException;
     Todo get(String id) throws ServiceException;
 }

@@ -6,9 +6,11 @@ import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Singleton
 public class InMemoryTodoService implements TodoService {
@@ -55,13 +57,22 @@ public class InMemoryTodoService implements TodoService {
     }
 
     @Override
-    public Collection<Todo> listTodos(String userId) throws ServiceException{
+    public Collection<Todo> listTodos(String userId, int limit) throws ServiceException{
         if (userId != null && !userId.isEmpty()) {
             //find todos by user, for the moment return all
             throw new ServiceException("querying by user Id not supported");
         }
 
-        return allTodos.values();
+        if (limit == -1) {
+            return allTodos.values();
+        } else {
+            List<Todo> todos = allTodos.entrySet().stream()
+                    .limit(limit)
+                    .map(Map.Entry::getValue)
+                    .collect(Collectors.toList());
+            return todos;
+        }
+
     }
 
     @Override

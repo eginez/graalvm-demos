@@ -19,7 +19,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.2.3'
+        mavenBom 'io.micronaut:micronaut-bom:1.2.5'
     }
 }
 
@@ -38,6 +38,7 @@ dependencies {
     compile "io.micronaut:micronaut-runtime"
     compile "io.micronaut:micronaut-http-server-netty"
     compile "javax.annotation:javax.annotation-api"
+    compile 'io.micronaut.configuration:micronaut-redis-lettuce'
     compile project(":api")
     compileOnly "com.oracle.substratevm:svm"
     runtime "ch.qos.logback:logback-classic:1.2.3"
@@ -65,3 +66,4 @@ tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
     options.compilerArgs.add('-parameters')
 }
+

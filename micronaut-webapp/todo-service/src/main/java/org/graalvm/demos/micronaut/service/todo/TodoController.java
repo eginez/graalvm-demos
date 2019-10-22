@@ -22,7 +22,7 @@ import java.util.Optional;
 @Validated
 public class TodoController {
 
-    @Inject TodoService todoService;
+    @Inject RedisTodoService todoService;
     private static final Logger LOGGER = LoggerFactory.getLogger(TodoController.class);
 
     private HttpResponse<?> guardedResponse(ServiceException.ServiceExceptingSupplier<?> operation){
@@ -43,14 +43,17 @@ public class TodoController {
     }
 
 
-    @Get("/{?userId}")
+    @Get("/{?limit}")
     @Produces(MediaType.APPLICATION_JSON)
-    public HttpResponse<?> list(Optional<String> userId) {
+    public HttpResponse<?> list(Optional<String> limit) {
         LOGGER.debug("Listing all todos");
-        if(userId.isPresent()) {
-            return HttpResponse.badRequest("querying todos by user id is not supported");
+        int l = 100;
+        if (limit.isPresent()) {
+           l = Integer.parseInt(limit.get()) ;
         }
-        return guardedResponse(() -> todoService.listTodos(null));
+
+        final int limitParam = l;
+        return guardedResponse(() -> todoService.listTodos(null, limitParam));
     }
 
     @Post

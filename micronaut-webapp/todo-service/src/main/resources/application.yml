@@ -4,3 +4,5 @@ micronaut:
     buildSelfSigned: true
   application:
     name: todo-service
+redis:
+  uri: ${REDIS_URL}
