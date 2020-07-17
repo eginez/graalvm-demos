@@ -1,6 +1,6 @@
 micronaut:
   ssl:
-    enabled: true
+    enabled: false
     keyStore:
       path: classpath:certificate.p12
       password: native

@@ -69,7 +69,7 @@ tasks.withType(JavaCompile){
 task nativei(type: Exec) {
     def jarFiles = fileTree(project.libsDir).filter {it.name.endsWith("jar") && it.name.contains("all")}.files
     if (!jarFiles.isEmpty()) {
-        commandLine 'native-image', '--no-server', '--verbose', '--enable-all-security-services', '-cp', jarFiles.first()
+        commandLine 'native-image', '--no-server', '--verbose', '-H:-DeleteLocalSymbols', '-H:NativeLinkerOption=-fno-omit-frame-pointer', '-H:GenerateDebugInfo=2', '--enable-all-security-services', '-cp', jarFiles.first()
     }
 }
 nativei.dependsOn(assemble)
